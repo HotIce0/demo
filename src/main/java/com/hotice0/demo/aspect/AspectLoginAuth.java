@@ -1,8 +1,6 @@
 package com.hotice0.demo.aspect;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +17,11 @@ public class AspectLoginAuth {
     HttpServletRequest request;
 
     @Pointcut("@annotation(com.hotice0.demo.annotation.AnnotationLoginAuth)")
-    public void needAuthRequest(){ }
+    public void needLoginAuthRequest(){ }
 //    @Pointcut("execution(* com.hotice0.demo.controller..*.*(..)))")
 //    public void needAuthRequest(){ }
 
-    @Before("needAuthRequest()")
+    @Before("needLoginAuthRequest()")
     public void loginAuth() throws Exception {
         String username = (String) request.getSession().getAttribute("username");
         if (username == null) {

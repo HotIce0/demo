@@ -26,7 +26,8 @@ public class MsgController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String leaveMsg(
             HttpServletRequest request,
-            String msg) {
+            String msg
+    ) {
         System.out.println("调用了 leaveMsg 函数");
         if (msg.length() < 1) {
             return "留言不能为空";

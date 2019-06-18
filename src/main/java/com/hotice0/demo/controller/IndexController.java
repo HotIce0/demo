@@ -2,6 +2,9 @@ package com.hotice0.demo.controller;
 
 import com.hotice0.demo.db.db_object.DBOUser;
 import com.hotice0.demo.db.mapper.MapperUser;
+import com.hotice0.demo.error.DError;
+import com.hotice0.demo.error.ErrorCodeMsg;
+import com.hotice0.demo.utils.resultUtil.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author HotIce0
@@ -46,24 +51,25 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(
+    public Result login(
             HttpServletRequest request,
             String username,
             String password
     ) {
         // 通过用户名查找到其对应密码
         DBOUser dboUser = mapperUser.getUserByUsername(username);
+
         if (dboUser == null) {
-            return "该用户不存在";
+            return Result.fail(DError.USER_INVALIED_USERNAME.getErrCode(), DError.USER_INVALIED_USERNAME.getErrMsg());
         }
         // 验证密码是否正确
         if (dboUser.getPassword().equals(password)){
             HttpSession httpSession = request.getSession();
             httpSession.setAttribute("username", username);
             System.out.println(httpSession.getId());
-            return "登录成功";
+            return Result.success("登录成功");
         } else{
-            return "密码错误登录失败";
+            return Result.fail(DError.USER_PASSWORD_ERROR.getErrCode(), DError.USER_PASSWORD_ERROR.getErrMsg());
         }
     }
 
