@@ -2,10 +2,7 @@ package com.hotice0.demo.db.mapper;
 
 import com.hotice0.demo.db.db_object.DBOMsg;
 import com.hotice0.demo.db.db_object.DBOUser;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,5 +18,8 @@ public interface MapperMsg {
     List<DBOMsg> getAll();
 
     @Insert("INSERT INTO t_msg (msg, username) VALUES (#{msg}, #{username})")
-    void insertMsg(@Param("msg") String msg, @Param("username") String username);
+    int insertMsg(@Param("msg") String msg, @Param("username") String username);
+
+    @Delete("DELETE FROM t_msg WHERE id=#{id}")
+    void delMsg(@Param("id") Integer id);
 }

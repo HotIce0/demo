@@ -24,7 +24,7 @@ import java.util.Map;
  * @Create 2019-05-27 20:26
  */
 @RestController
-public class IndexController {
+public class IndexController extends BaseController{
     @Autowired
     MapperUser mapperUser;
 
@@ -50,6 +50,13 @@ public class IndexController {
         return "我";
     }
 
+    /**
+     * 登录函数
+     * @param request
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result login(
             HttpServletRequest request,
@@ -80,6 +87,4 @@ public class IndexController {
         HttpSession httpSession = request.getSession();
         return (String) httpSession.getAttribute("username");
     }
-
-
 }

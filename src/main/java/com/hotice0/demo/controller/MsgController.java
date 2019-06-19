@@ -3,9 +3,15 @@ package com.hotice0.demo.controller;
 import com.hotice0.demo.annotation.AnnotationLoginAuth;
 import com.hotice0.demo.aspect.AspectLoginAuth;
 import com.hotice0.demo.db.mapper.MapperMsg;
+import com.hotice0.demo.error.DError;
+import com.hotice0.demo.error.DException;
+import com.hotice0.demo.service.MsgService;
+import com.hotice0.demo.service.MsgServiceInterface;
+import com.hotice0.demo.utils.resultUtil.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,24 +22,52 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping(value = "/msg")
-public class MsgController {
+public class MsgController extends BaseController{
     @Autowired
-    MapperMsg mapperMsg;
+    MsgServiceInterface msgServiceInterface;
 
 
-    // 加了AnnotationLoginAuth注解，则会进行登录认证
+    /**
+     * 发布留言
+     * @param request
+     * @param msg
+     * @return
+     */
     @AnnotationLoginAuth
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public String leaveMsg(
+    public Result leaveMsg(
             HttpServletRequest request,
+            @RequestParam
             String msg
-    ) {
-        System.out.println("调用了 leaveMsg 函数");
+    ) throws DException {
         if (msg.length() < 1) {
-            return "留言不能为空";
+            throw new DException(DError.SYS_INVALIED_PARAMENT, "留言不能为空");
         }
+//            return Result.fail(
+//                    DError.SYS_INVALIED_PARAMENT.getErrCode(),
+//                    DError.SYS_INVALIED_PARAMENT.setErrMsg("留言不能为空")
+//            );
+
         String username = (String) request.getSession().getAttribute("username");
-        mapperMsg.insertMsg(msg, username);
-        return "成功插入留言";
+        msgServiceInterface.addMsg(msg, username);
+        return Result.success("成功留言");
+    }
+
+    /**
+     * 删除留言
+     * @param request
+     * @param id
+     * @return
+     */
+    @AnnotationLoginAuth
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public Result delMsg(
+            HttpServletRequest request,
+            @RequestParam
+            Integer id
+    ) {
+        System.out.println(id);
+        msgServiceInterface.delMsg(id);
+        return Result.success("留言删除成功");
     }
 }
