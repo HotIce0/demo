@@ -2,6 +2,7 @@ package com.hotice0.demo.aspect;
 
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Create 2019-06-13 20:15
  */
 @Aspect
+@Order(2000)
 @Component
 public class AspectLoginAuth {
     @Autowired
@@ -23,6 +25,7 @@ public class AspectLoginAuth {
 
     @Before("needLoginAuthRequest()")
     public void loginAuth() throws Exception {
+        System.out.println("AspectLoginAuth");
         String username = (String) request.getSession().getAttribute("username");
         if (username == null) {
             // 用户未进行登录

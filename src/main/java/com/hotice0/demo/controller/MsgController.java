@@ -1,6 +1,7 @@
 package com.hotice0.demo.controller;
 
 import com.hotice0.demo.annotation.AnnotationLoginAuth;
+import com.hotice0.demo.aspect.AspectLog;
 import com.hotice0.demo.aspect.AspectLoginAuth;
 import com.hotice0.demo.db.mapper.MapperMsg;
 import com.hotice0.demo.error.DError;
@@ -8,6 +9,8 @@ import com.hotice0.demo.error.DException;
 import com.hotice0.demo.service.MsgService;
 import com.hotice0.demo.service.MsgServiceInterface;
 import com.hotice0.demo.utils.resultUtil.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(value = "/msg")
 public class MsgController extends BaseController{
+    private final static Logger logger = LoggerFactory.getLogger(MsgController.class);
     @Autowired
     MsgServiceInterface msgServiceInterface;
 
@@ -41,6 +45,7 @@ public class MsgController extends BaseController{
             String msg
     ) throws DException {
         if (msg.length() < 1) {
+//            logger.debug("留言不能为空的，异常");
             throw new DException(DError.SYS_INVALIED_PARAMENT, "留言不能为空");
         }
 //            return Result.fail(

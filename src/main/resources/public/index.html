@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 模板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<form id="login_form" action="/login" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-10">
+            <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-10">
+            <input type="text" name="password" class="form-control" id="password" placeholder="请输入密码">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">登录</button>
+        </div>
+    </div>
+</form>
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- 包括所有已编译的插件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $("#login_form").submit(function(e){
+
+        // $("#username").value
+        // $.post(
+        //     "/login",
+        //     {
+        //         username: 'sdk',
+        //         password: "s"
+        //     },
+        //     function (result) {
+        //         if(result.status == "success") {
+        //             alert(result.data)
+        //             window.location.href='msg.html';
+        //         } else {
+        //             alert("errCode : " + result.data.errCode + " errMsg : " + result.data.errMsg)
+        //         }
+        //         console.log(result)
+        //     }
+        // );
+        // 不进行表单提交
+        return false
+    });
+
+</script>
+</body>
+</html>
